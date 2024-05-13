@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>Movie Zot</title>
     <!-- Add any CSS stylesheets or meta tags here -->
 </head>
 
@@ -40,7 +40,7 @@
                 movieName = "Cars"
             }
             console.log(movieName)
-            var omdbURL = "http://www.omdbapi.com/?t=" + movieName + "&apikey=2a240d40";
+            var omdbURL = "https://www.omdbapi.com/?t=" + movieName + "&apikey=2a240d40";
             fetch(omdbURL)
                 .then(response => {
                     // Check if the response is successful (status code 200)
