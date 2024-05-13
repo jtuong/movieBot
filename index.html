@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <!-- Add any CSS stylesheets or meta tags here -->
+</head>
+
+<body>
+    <!-- Textbox input -->
+    <input type="text" id="movieSearch" placeholder="Enter text here">
+    <!-- Button to trigger action -->
+    <button onclick="findMovie()">Search</button>
+    <button id="watchButton" onclick="watchThisMovie()"></button>
+    <div></div>
+    <b><span id="Movie Details"></span></b>
+    <div></div>
+    <b></b>
+    <b><span id="Movie Name"></span></b>
+    <div></div>
+    <iframe id="moviePlayer" width="560" height="315" src="https://vidsrc.to/embed/movie/tt0317219" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    <div></div>
+    <button id="watchButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
+
+
+
+
+    <script>
+        document.getElementById("Movie Name").textContent = "Current Movie Loaded: Cars";
+        var movieInformation;
+        function findMovie() {
+            // Get the value from the textbox
+            var movieName = document.getElementById("movieSearch").value;
+            if (movieName.length == 0) {
+                movieName = "Cars"
+            }
+            console.log(movieName)
+            var omdbURL = "http://www.omdbapi.com/?t=" + movieName + "&apikey=2a240d40";
+            fetch(omdbURL)
+                .then(response => {
+                    // Check if the response is successful (status code 200)
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Parse the JSON response
+                    return response.json();
+                })
+                .then(data => {
+                    // Process the JSON data returned from the API
+                    console.log(data);
+                    if (data.Title == null) {
+                        document.getElementById("Movie Details").textContent = "Could not find movie with that title. Must be an exact match from imdb"
+                        document.getElementById("watchButton").textContent = "Not a valid movie"
+                        document.getElementById("watchButton").disabled = true;
+                    } else {
+                        movieInformation = data
+                        document.getElementById("Movie Details").textContent = "Movie Description: " + movieInformation.Plot
+                        document.getElementById("watchButton").disabled = false;
+                        document.getElementById("watchButton").textContent = "Watch " + movieInformation.Title
+                    }
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during the fetch
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        function watchThisMovie() {
+            var imdbID = movieInformation.imdbID;
+            document.getElementById("moviePlayer").src = "https://vidsrc.to/embed/movie/" + imdbID;
+            document.getElementById("Movie Name").textContent = "Current Movie Loaded: " + movieInformation.Title;
+        }
+
+        function openIMDbSearch() {
+            // Set the URL of the website you want to open
+            var websiteUrl = "https://www.imdb.com/search/title/";
+
+            // Open the website in a new tab
+            window.open(websiteUrl, '_blank');
+        }
+
+    </script>
+</body>
+
+
+
+</html>
