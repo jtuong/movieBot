@@ -12,7 +12,7 @@
     <!-- Textbox input -->
     <input type="text" id="movieSearch" placeholder="Enter text here">
     <!-- Button to trigger action -->
-    <button onclick="findMovie()">Search</button>
+    <button id="searchButton" onclick="findMovie()">Search</button>
     <button id="watchButton" onclick="watchThisMovie()"></button>
     <div></div>
     <b><span id="Movie Details"></span></b>
@@ -20,17 +20,19 @@
     <b></b>
     <b><span id="Movie Name"></span></b>
     <div class="video-container">
-    <iframe id="moviePlayer" width="560" height="315" src="https://vidsrc.to/embed/movie/tt0317219" frameborder="0"
-        target="_self" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
+        <iframe id="moviePlayer" width="560" height="315" src="https://vidsrc.to/embed/movie/tt0317219" frameborder="0"
+            target="_self"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
         <div class="resize-handle" id="resizeHandle"></div>
     </div>
-    <button id="watchButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
+    <div>
+    <button id="searchIMDbButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
     <button id="darkMode" onclick="zarkZode()">zarkZode</button>
-    <div></div>
+    <button id="hideEverything" onclick="hideEverything()">Hide/Show Everything</button>
+    </div>
 
-    <body>Search for the movie of your choice on IMDb and copy and paste the name exactly as-is</body>
-    <div></div>
+    <div id="informationalText">Search for the movie of your choice on IMDb and copy and paste the name exactly as-is</div>
 
 
     <script>
@@ -125,6 +127,18 @@
 
             // Open the website in a new tab
             window.open(websiteUrl, '_blank');
+        }
+
+        function hideEverything() {
+            const ids = ['Movie Details', 'watchButton', 'Movie Name', 'movieSearch', 'searchButton', 'searchIMDbButton', 'informationalText']
+            for (const id of ids) {
+                var curr = document.getElementById(id)
+                if (curr.style.opacity === '0') {
+                    curr.style.opacity = '1';
+                } else {
+                    curr.style.opacity = '0';
+                }
+            }
         }
     </script>
 </body>
