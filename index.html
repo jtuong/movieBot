@@ -9,11 +9,10 @@
 </head>
 
 <body>
-    <!-- Textbox input -->
+
     <input type="text" id="movieSearch" placeholder="Enter text here">
-    <!-- Button to trigger action -->
-    <button id="searchButton" onclick="findMovie()">Search</button>
-    <button id="watchButton" onclick="watchThisMovie()"></button>
+    <button class='button-80' id="searchButton" onclick="findMovie()">Search</button>
+    <button class='button-80' id="watchButton" onclick="watchThisMovie()"></button>
     <div></div>
     <b><span id="Movie Details"></span></b>
     <div></div>
@@ -27,12 +26,15 @@
         <div class="resize-handle" id="resizeHandle"></div>
     </div>
     <div>
-    <button id="searchIMDbButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
-    <button id="darkMode" onclick="zarkZode()">zarkZode</button>
-    <button id="hideEverything" onclick="hideEverything()">Hide/Show Everything</button>
+        <button class='button-80' id="hideEverything" onclick="hideEverything()">Hide/Show Everything</button>
+        <button class='button-80' id="darkMode" onclick="zarkZode()">zarkZode</button>
+        <button class='button-80' id="searchIMDbButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
+
+
     </div>
 
-    <div id="informationalText">Search for the movie of your choice on IMDb and copy and paste the name exactly as-is</div>
+    <div id="informationalText">Search for the movie of your choice on IMDb and copy and paste the name exactly as-is
+    </div>
 
 
     <script>
@@ -139,7 +141,13 @@
                     curr.style.opacity = '0';
                 }
             }
+
+            const buttonsLeft = ['hideEverything', 'darkMode']
+            for (const id of buttonsLeft) {
+                var curr = document.getElementById(id).classList.toggle('small');
+            }
         }
+
     </script>
 </body>
 
