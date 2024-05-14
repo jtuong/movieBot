@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Zot</title>
-    <!-- Add any CSS stylesheets or meta tags here -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -19,18 +19,61 @@
     <div></div>
     <b></b>
     <b><span id="Movie Name"></span></b>
-    <div></div>
+    <div class="video-container">
     <iframe id="moviePlayer" width="560" height="315" src="https://vidsrc.to/embed/movie/tt0317219" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        target="_self" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
-    <div></div>
+        <div class="resize-handle" id="resizeHandle"></div>
+    </div>
     <button id="watchButton" onclick="openIMDbSearch()">Search IMDb for Movie Title</button>
+    <button id="darkMode" onclick="zarkZode()">zarkZode</button>
     <div></div>
-    <body>Search for the movie of your choice on IMDb and copy and paste the name exactly as-is</body>
 
+    <body>Search for the movie of your choice on IMDb and copy and paste the name exactly as-is</body>
+    <div></div>
 
 
     <script>
+        const resizeHandle = document.querySelector('.resize-handle');
+        const videoContainer = document.querySelector('.video-container');
+        const video = document.getElementById('moviePlayer');
+
+        let isResizing = false;
+        let startX;
+        let startY;
+
+        resizeHandle.addEventListener('mousedown', startResize);
+
+        function startResize(event) {
+            event.preventDefault();
+            isResizing = true;
+            startX = event.clientX;
+            startY = event.clientY;
+            window.addEventListener('mousemove', resize);
+            window.addEventListener('mouseup', stopResize);
+        }
+
+        function resize(event) {
+            if (isResizing) {
+                const width = videoContainer.offsetWidth + (event.clientX - startX);
+                const height = videoContainer.offsetHeight + (event.clientY - startY);
+                videoContainer.style.width = `${width}px`;
+                videoContainer.style.height = `${height}px`;
+                startX = event.clientX;
+                startY = event.clientY;
+            }
+        }
+
+        function stopResize() {
+            isResizing = false;
+            window.removeEventListener('mousemove', resize);
+        }
+        function zarkZode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+            console.log("buttonClicked")
+        }
+
         document.getElementById("Movie Name").textContent = "Current Movie Loaded: Cars";
         var movieInformation;
         function findMovie() {
@@ -83,10 +126,7 @@
             // Open the website in a new tab
             window.open(websiteUrl, '_blank');
         }
-
     </script>
 </body>
-
-
 
 </html>
